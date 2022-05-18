@@ -6,3 +6,4 @@
 1. Both projects have their own README.md with additional information
 2. frontend runs in port ``3000`` and backend runs in port ``3005`` and can only be changed in code
 3. Due to the time limit, test coverage is low. An example of a non-generated test would be on ``backend/src/auth/strategies``
+4. OpenAPI api docs available at ``localhost:3005/documentation``
