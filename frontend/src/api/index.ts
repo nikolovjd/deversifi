@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { TokenAmount } from '../components/Wallet/Wallet'
+import { ORDER_TYPE, TOKEN } from '../types'
+import { OrdersItemProps } from '../components/Orders/OrdersItem'
 
 const api = axios.create({
   baseURL: 'http://localhost:3005/api',
@@ -15,8 +17,22 @@ const getAuthHeaders = () => {
   })
 }
 
+export interface Balance {
+  [TOKEN.ETH]: number
+  [TOKEN.USDT]: number
+  [TOKEN.DVF]: number
+}
+
+export interface OrderDto {
+  id: string;
+  type: ORDER_TYPE;
+  token: TOKEN;
+  amount: number;
+  price: number;
+}
+
 const API = {
-  getBalances: async () => {
+  getBalances: async (): Promise<Balance> => {
     const result = await api.get('/getBalances', getAuthHeaders())
     return result.data
   },
@@ -28,7 +44,7 @@ const API = {
       console.log(err)
     }
   },
-  getOrders: async () => {
+  getOrders: async (): Promise<OrderDto[]> => {
     const result = await api.get('/getOrders', getAuthHeaders())
     return result.data
   },

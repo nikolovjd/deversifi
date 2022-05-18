@@ -6,7 +6,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 const AuthView = () => {
   const [hasMetaMaskPlugin, setHasMetaMaskPlugin] = useState(false)
-  // @ts-ignore
   const { login } = useContext(authContext)
   const { state } = useLocation()
   const navigate = useNavigate()
@@ -24,7 +23,7 @@ const AuthView = () => {
       if (window.ethereum) {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
         if (!accounts.length) {
-          // TODO:
+          // TODO: display flash message or similar
         }
         const wallet = accounts[0]
         const signature = await window.ethereum.request({ method: 'personal_sign', params: ['auth', wallet] })

@@ -1,11 +1,20 @@
-import * as React from 'react'
+import { createContext, ReactNode, useState } from 'react'
 import { AuthData } from '../types'
 
-// @ts-ignore
-export const authContext = React.createContext()
+interface AuthContextType {
+  auth: AuthData | null
+  login: (data: AuthData) => void
+  logout: () => void
+}
+
+export const authContext = createContext<AuthContextType>({
+  auth: null,
+  login: (data: AuthData) => undefined,
+  logout: () => undefined
+})
 
 export function useAuth() {
-  const [auth, setAuth] = React.useState(null)
+  const [auth, setAuth] = useState<AuthData | null>(null)
 
   return {
     auth,
@@ -13,7 +22,6 @@ export function useAuth() {
       const { wallet, signature } = data
       localStorage.setItem('wallet', wallet)
       localStorage.setItem('signature', signature)
-      // @ts-ignore
       setAuth(data)
     },
     logout() {
@@ -24,8 +32,7 @@ export function useAuth() {
   }
 }
 
-// @ts-ignore
-export function AuthProvider({ children }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const auth = useAuth()
 
   return <authContext.Provider value={auth}>{children}</authContext.Provider>

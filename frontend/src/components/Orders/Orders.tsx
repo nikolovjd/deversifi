@@ -1,5 +1,6 @@
 import OrdersItem, { OrdersItemProps } from './OrdersItem'
 import { Table } from 'react-bootstrap'
+import { OrderDto } from '../../api'
 
 const Orders = (props: OrdersProps) => {
   return (
@@ -22,7 +23,7 @@ const Orders = (props: OrdersProps) => {
   )
 }
 export interface OrdersProps {
-  orders: OrdersItemProps[]
+  orders: OrderDto[]
   setOrders: any
   handleSuccess: (id: string) => void
 }

@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import { authContext } from '../hooks/UseAuth'
 
 const RequireAuth = ({ children }: any) => {
-  // @ts-ignore
   const { auth, login } = useContext(authContext)
 
   const location = useLocation()

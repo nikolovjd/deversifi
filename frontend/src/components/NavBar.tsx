@@ -5,7 +5,6 @@ import { useContext } from 'react'
 import { authContext } from '../hooks/UseAuth'
 
 const NavBar = () => {
-  // @ts-ignore
   const { auth, logout } = useContext(authContext)
 
   return (

@@ -5,7 +5,7 @@ import Order from '../components/Order'
 import { useEffect, useState } from 'react'
 import { OrdersItemProps } from '../components/Orders/OrdersItem'
 import { ORDER_TYPE, TOKEN } from '../types'
-import API from '../api'
+import API, { OrderDto } from '../api'
 
 const TradeView = () => {
   const [balances, setBalances] = useState({ [TOKEN.USDT]: 0, [TOKEN.ETH]: 0, [TOKEN.DVF]: 0 })
@@ -14,7 +14,7 @@ const TradeView = () => {
   const [amount, setAmount] = useState(1)
   const [price, setPrice] = useState(1)
   const [type, setType] = useState(ORDER_TYPE.BUY)
-  const [orders, setOrders] = useState([] as OrdersItemProps[])
+  const [orders, setOrders] = useState([] as OrderDto[])
 
   const handleCancelOrder = (id: string) => {
     const order = orders.find(o => o.id === id)
@@ -32,22 +32,20 @@ const TradeView = () => {
 
   useEffect(() => {
     (async () => {
-      // WALLET
-      const balances = await API.getBalances()
-      setBalances(balances as any)
-      // ORDER
+      // TODO: improvement with promise.all
       if (isLoading) {
         try {
           await API.placeOrder({ token, amount, type, price })
           setLoading(false)
+          const balances = await API.getBalances()
+          setBalances(balances)
+          const orders = await API.getOrders()
+          setOrders(orders)
         } catch (err) {
           setLoading(false)
           console.error('Insufficient funds')
         }
       }
-      // ORDERS
-      const orders = await API.getOrders()
-      setOrders(orders as any)
     })()
   }, [isLoading])
 
