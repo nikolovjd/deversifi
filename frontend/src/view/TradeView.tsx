@@ -37,14 +37,24 @@ const TradeView = () => {
         try {
           await API.placeOrder({ token, amount, type, price })
           setLoading(false)
-          const balances = await API.getBalances()
-          setBalances(balances)
-          const orders = await API.getOrders()
-          setOrders(orders)
         } catch (err) {
           setLoading(false)
           console.error('Insufficient funds')
         }
+      }
+
+      try {
+        const balances = await API.getBalances()
+        setBalances(balances)
+      } catch (err) {
+        console.log(err)
+      }
+
+      try {
+        const orders = await API.getOrders()
+        setOrders(orders)
+      } catch (err) {
+        console.log(err)
       }
     })()
   }, [isLoading])
