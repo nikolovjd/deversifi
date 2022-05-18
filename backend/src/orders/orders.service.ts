@@ -31,6 +31,6 @@ export class OrdersService {
       `CANCELLED ${cancelledOrder.type} ${cancelledOrder.token} @ ${cancelledOrder.price}USD ${cancelledOrder.amount}`,
     );
 
-    return cancelledOrder;
+    return true;
   }
 }
